@@ -36,7 +36,7 @@
 </nav>
 <nav class="container mt-5 row justify-content-center col-md-6 card">
     <div class="card-body">
-        <form action="ControlServlet" method="post">
+        <form action="dashboard" method="post">
             <div class="mb-3">
                 <label for="account_id" class="form-label"  >Account ID</label>
                 <input type="text" class="form-control" id="account_id" name="account_id" required>

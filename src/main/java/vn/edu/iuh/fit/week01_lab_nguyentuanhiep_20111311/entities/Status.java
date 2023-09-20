@@ -10,25 +10,14 @@ public enum Status {
 
 
     Status(int s) {
-        this.status = s;
+        status = s;
     }
 
     public int getStatus() {
 
          return status;
     }
-    public String getStatusString() {
-        switch (status) {
-            case 1:
-                return "ACTIVE";
-            case 0:
-                return "DEACTIVE";
-            case -1:
-                return "REMOVE";
-            default:
-                return "UNKNOWN";
-        }
-    }
+
 
     public void setStatus(int status) {
         this.status = status;

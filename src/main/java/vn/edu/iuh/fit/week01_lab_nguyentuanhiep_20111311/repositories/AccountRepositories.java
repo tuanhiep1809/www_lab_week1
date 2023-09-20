@@ -33,7 +33,7 @@ public class AccountRepositories {
                         resultSet.getString(3),
                         resultSet.getString(4),
                         resultSet.getString(5),
-                        Status.values()[resultSet.getInt(6)]);
+                        getStatusFromInt(resultSet.getInt(6)));
                 list.add(account);
             }
         } catch (Exception e) {
@@ -59,5 +59,45 @@ public class AccountRepositories {
         ResultSet rs = statement.executeQuery();
         return rs.next();
     }
+    public Account findAccountByID (String id){
+        Account account = null;
+        try {
+            pretatement = connection.prepareStatement("SELECT * FROM account WHERE account_id = ?");
+            pretatement.setString(1,id);
+            ResultSet resultSet = pretatement.executeQuery();
+            while (resultSet.next()){
+                account = new Account(resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        getStatusFromInt(resultSet.getInt(6)));
+            }
 
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return account;
+    }
+    private Status getStatusFromInt(int intValue) {
+        switch (intValue) {
+            case 0:
+                return Status.DEACTIVE;
+            case 1:
+                return Status.ACTIVE;
+            case -1:
+                return Status.REMOVE;
+            default:
+                throw new IllegalArgumentException("Giá trị enum không hợp lệ: " + intValue);
+        }
+    }
+    public boolean delete(String id) throws SQLException {
+        String sql =  "UPDATE account\n" +
+                "SET `status` = -1\n" +
+                "WHERE account_id = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, id);
+        return statement.executeUpdate() > 0;
+
+    }
 }
