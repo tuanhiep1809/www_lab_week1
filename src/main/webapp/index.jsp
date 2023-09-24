@@ -33,10 +33,10 @@
     </a>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <form method="post" action="ControlServlet">
+      <form method="get" action="ControlServlet">
         <ul class="navbar-nav ml-auto"> <!-- Sử dụng lớp ml-auto để nút "Login" nằm bên phải -->
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="Login.jsp"
+            <a class="nav-link active" aria-current="page"  href="Login"
                style="color: white; font-size: 17px;">Login</a>
 
           </li>

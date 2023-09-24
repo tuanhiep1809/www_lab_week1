@@ -20,6 +20,35 @@ public class AccountRepositories {
     }
 
     // lấy thông tin  tất cả tài khoản
+    public boolean insert(Account account) throws SQLException {
+        String sql = "INSERT account VALUE(?,?,?,?,?,?)";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, account.getAccount_id());
+        statement.setString(2, account.getFull_name());
+        statement.setString(3, account.getPassword());
+        statement.setString(4, account.getEmail());
+        statement.setString(5, account.getPhone());
+        statement.setInt(6, account.getStatus().getStatus());
+
+        return statement.executeUpdate() > 0;
+
+    }
+
+    public boolean update(Account account) throws SQLException {
+        String sql = "UPDATE account\n" +
+                "SET full_name=?,password = ?, email = ?, phone = ?, status = ? \n" +
+                "WHERE account_id = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, account.getFull_name());
+        statement.setString(2, account.getPassword());
+        statement.setString(3, account.getEmail());
+        statement.setString(4, account.getPhone());
+        statement.setInt(5, account.getStatus().getStatus());
+        statement.setString(6, account.getAccount_id());
+
+        return statement.executeUpdate() > 0;
+
+    }
     public List<Account> getAllAccount() {
         List<Account> list = new ArrayList<Account>();
         try {
@@ -91,6 +120,18 @@ public class AccountRepositories {
                 throw new IllegalArgumentException("Giá trị enum không hợp lệ: " + intValue);
         }
     }
+//    private int getStatusFromString(String intValue) {
+//        switch (intValue) {
+//            case "DEACTIVE":
+//                return 0;
+//            case "ACTIVE":
+//                return 1;
+//            case "REMOVE":
+//                return -1;
+//            default:
+//                throw new IllegalArgumentException("Giá trị enum không hợp lệ: " + intValue);
+//        }
+//    }
     public boolean delete(String id) throws SQLException {
         String sql =  "UPDATE account\n" +
                 "SET `status` = -1\n" +
